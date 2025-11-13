@@ -181,6 +181,7 @@ function generationRandom() {
 
     console.log(`Рандомний надійний пароль- ${reliableRandom_password}`)
     generationPassword.addEventListener('click', () => {
+        inp_Password.value =``;
         setTimeout(() => {
             inp_Password.value = reliableRandom_password
             password = reliableRandom_password.split('')
@@ -195,4 +196,5 @@ function generationRandom() {
         }, 500);
     })
 }
+
 generationRandom()
