@@ -23,11 +23,17 @@ inp_Password.addEventListener('input', () => {
         processing_Password(password)
         upper_lowerLeters(password)
         includesSimbols(password)
-        if (inp_Password.value !== '') {
-            checkResult(value)
-        }
     }, 100);
+
+        if (inp_Password.value !== '') {
+        checkResult(value)
+    }
+    else {
+        result.textContent = ``;
+    }
 })
+
+
 
 let arrNums = []
 function filterArray() {
@@ -142,17 +148,19 @@ btnShow.addEventListener('click', () => {
 let result = document.getElementById('result')
 
 function checkResult() {
+
     setTimeout(() => {
-        if (firstcriteria && secondcriteria && thirdcriteria && fourthcriteria) {
+        if (inp_Password.value != `` && firstcriteria && secondcriteria && thirdcriteria && fourthcriteria) {
             result.innerHTML = `Ваш пароль відповідає всім критеріям👍`
             result.style.color = 'rgba(18, 213, 18, 0.792)'
             value = true
-        } else {
+        }
+         else {
             result.innerHTML = `Ваш пароль не дуже надійний`
             result.style.color = '#ef4444'
             value = false
         }
-    }, 1000);
+    }, 100);
 }
 
 
@@ -168,22 +176,26 @@ function generationRandom() {
 
         let simbol = arrPassword.filter(a => arrSimbols.includes(a))
         let nums = arrPassword.filter(a => arrNums.includes(a))
+        let big = arrPassword.filter(a => a.toUpperCase())
+        let smole = arrPassword.filter(a => a.toLowerCase())
 
-        if (simbol.length > 0 && nums.length > 0) {
+
+        if (simbol.length > 0 && nums.length > 0 && big.length > 0 && smole.length > 0) {
             arrRandom_passwords.push(arrPassword)
         }
         console.log(simbol, arrPassword)
     }
     console.log(arrRandom_passwords)
-    
+
     generationPassword.addEventListener('click', () => {
         inp_Password.value = ``
 
-            let randomRealible = Math.floor(Math.random(arrRandom_passwords) * arrRandom_passwords.length)
-            let reliableRandom_password = arrRandom_passwords[randomRealible].join('')
-            
-            console.log(`Рандомний надійний пароль- ${reliableRandom_password}`)
+
         setTimeout(() => {
+                    let randomRealible = Math.floor(Math.random(arrRandom_passwords) * arrRandom_passwords.length)
+        let reliableRandom_password = arrRandom_passwords[randomRealible].join('')
+
+        console.log(`Рандомний надійний пароль- ${reliableRandom_password}`)
             inp_Password.value = reliableRandom_password
             password = reliableRandom_password.split('')
             smole_Letters = reliableRandom_password.split('')
@@ -192,10 +204,9 @@ function generationRandom() {
             processing_Password(password)
             upper_lowerLeters(password)
             includesSimbols(password)
-
             checkResult(value)
-        }, 500);
+
+        }, 1000);
     })
 }
 generationRandom()
-
