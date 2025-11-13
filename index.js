@@ -175,13 +175,14 @@ function generationRandom() {
         console.log(simbol, arrPassword)
     }
     console.log(arrRandom_passwords)
-
-    let randomRealible = Math.floor(Math.random(arrRandom_passwords) * arrRandom_passwords.length)
-    let reliableRandom_password = arrRandom_passwords[randomRealible].join('')
-
-    console.log(`Рандомний надійний пароль- ${reliableRandom_password}`)
+    
     generationPassword.addEventListener('click', () => {
-        inp_Password.value =``;
+        inp_Password.value = ``
+
+            let randomRealible = Math.floor(Math.random(arrRandom_passwords) * arrRandom_passwords.length)
+            let reliableRandom_password = arrRandom_passwords[randomRealible].join('')
+            
+            console.log(`Рандомний надійний пароль- ${reliableRandom_password}`)
         setTimeout(() => {
             inp_Password.value = reliableRandom_password
             password = reliableRandom_password.split('')
@@ -196,5 +197,5 @@ function generationRandom() {
         }, 500);
     })
 }
-
 generationRandom()
+
