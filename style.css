@@ -81,7 +81,7 @@ overflow: hidden;
     border-radius: 15px;
     padding: 6px 6px;
     margin-top: -5px;
-    width: 150px;
+    width: 180px;
     color : var(--text);
     font-size: 14px;
     font-weight: 500;
@@ -108,4 +108,5 @@ overflow: hidden;
     font-weight: 600;
     font-family: 'kebneat', sans-serif;
     color: rgba(18, 213, 18, 0.792)
+
 }
