@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+<h2>Перевірка надійності паролю</h2>
+<input type="password" id="password" placeholder="Введіть пароль..." />
+<button id="show_close">Показати пароль</button>
+<button id="generation_Password">Згенерувати пароль</button>
+<div class="strength"><div class="bar" id="bar"></div></div>
+
+
+<div class="rules">
+<div class="rule" id="minSimbols"><span>•</span> Мінімум 8 символів</div>
+<div class="rule" id="big_Letters"><span>•</span> Малі та великі літери</div>
+<div class="rule" id="nums"><span>•</span> Цифри</div>
+<div class="rule" id="special_Characters"><span>•</span> Спецсимволи (!,@,#,$...)</div>
+</div>
+
+<p id="result"></p>
+</div>
+<script type="module" src="./index.js"></script>
+</body>
+</html>
