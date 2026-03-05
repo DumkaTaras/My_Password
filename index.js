@@ -1,7 +1,11 @@
 import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
 
 let arrSimbols = [`!`, `"`, `#`, `$`, `%`, `&`, `'`, `(`, `)`, `*`, `+`, `,`, `-`, `.`, `/`,
-    `:`, `;`, `<`, `=`, `>`, `?`, `@`, `[`, ' \ ', `]`, `^`, `_`, `{`, `|`, `}`, `~`, '`',]
+    `:`, `;`, `<`, `=`, `>`, `?`, `@`, `[`, `\\`, `]`, `^`, `_`, `{`, `|`, `}`, `~`, '`']
+let lowercase = 'abcdefghijklmnopqrstuvwxyz';
+let uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let numbers = '0123456789';
+let symbols = arrSimbols.join('');
 let randomPassword;
 
 
@@ -23,7 +27,7 @@ inp_Password.addEventListener('input', () => {
         processing_Password(password)
         upper_lowerLeters(password)
         includesSimbols(password)
-    }, 100);
+    }, 300);
 
         if (inp_Password.value !== '') {
         checkResult(value)
@@ -68,24 +72,9 @@ function processing_Password(password) {
 }
 
 function upper_lowerLeters(password) {
-    let big = false
-    let smole = false
-
-    for (let i = 0; i < password.length; i++) {
-        if (big_Letters.includes(arrNums[i]) || smole_Letters.includes(arrNums[i])) {
-            big_Letters = big_Letters.filter(a => a !== arrNums[i])
-            smole_Letters = smole_Letters.filter(a => a !== arrNums[i])
-        }
-    }
-    for (let i = 0; i < password.length + 1; i++) {
-        if (password.includes(big_Letters[i])) {
-            big = true
-        }
-        else if (password.includes(smole_Letters[i])) {
-            smole = true
-        }
-    }
-    if (big === true && smole === true) {
+    let hasUpper = password.some(char => char >= 'A' && char <= 'Z');
+    let hasLower = password.some(char => char >= 'a' && char <= 'z');
+    if (hasUpper && hasLower) {
         arrRules[1].classList.add('true')
         secondcriteria = true
     } else {
@@ -166,47 +155,41 @@ function checkResult() {
 
 const generationPassword = document.getElementById('generation_Password')
 
-let arrRandom_passwords = []
-function generationRandom() {
-    let arrPassword;
-
-    for (let i = 0; i < 100; i++) {
-        randomPassword = nanoid(9)
-        arrPassword = randomPassword.split('')
-
-        let simbol = arrPassword.filter(a => arrSimbols.includes(a))
-        let nums = arrPassword.filter(a => arrNums.includes(a))
-        let big = arrPassword.filter(a => a.toUpperCase())
-        let smole = arrPassword.filter(a => a.toLowerCase())
+let length_generationPasword = document.querySelector(".passwordLength");
+let par_Length = document.querySelector(".N_length");
+par_Length.textContent = length_generationPasword.value
 
 
-        if (simbol.length > 0 && nums.length > 0 && big.length > 0 && smole.length > 0) {
-            arrRandom_passwords.push(arrPassword)
-        }
-        console.log(simbol, arrPassword)
+console.log(length_generationPasword);
+
+function generatePassword(length) {
+    if (length < 8) length = 8;
+    let password = '';
+    password += lowercase[Math.floor(Math.random() * lowercase.length)];
+    password += uppercase[Math.floor(Math.random() * uppercase.length)];
+    password += numbers[Math.floor(Math.random() * numbers.length)];
+    password += symbols[Math.floor(Math.random() * symbols.length)];
+    let allChars = lowercase + uppercase + numbers + symbols;
+    for (let i = 4; i < length; i++) {
+        password += allChars[Math.floor(Math.random() * allChars.length)];
     }
-    console.log(arrRandom_passwords)
-
-    generationPassword.addEventListener('click', () => {
-        inp_Password.value = ``
-
-
-        setTimeout(() => {
-                    let randomRealible = Math.floor(Math.random(arrRandom_passwords) * arrRandom_passwords.length)
-        let reliableRandom_password = arrRandom_passwords[randomRealible].join('')
-
-        console.log(`Рандомний надійний пароль- ${reliableRandom_password}`)
-            inp_Password.value = reliableRandom_password
-            password = reliableRandom_password.split('')
-            smole_Letters = reliableRandom_password.split('')
-            big_Letters = reliableRandom_password.toUpperCase().split('')
-            includesNums(password)
-            processing_Password(password)
-            upper_lowerLeters(password)
-            includesSimbols(password)
-            checkResult(value)
-
-        }, 1000);
-    })
+    password = password.split('').sort(() => Math.random() - 0.5).join('');
+    return password;
 }
-generationRandom()
+
+length_generationPasword.addEventListener('input',(event)=>{
+    par_Length.textContent = event.target.value;
+})
+
+generationPassword.addEventListener('click', () => {
+    let newPassword = generatePassword(Number(length_generationPasword.value));
+    inp_Password.value = newPassword;
+    password = newPassword.split('');
+    smole_Letters = newPassword.split('');
+    big_Letters = newPassword.toUpperCase().split('');
+    includesNums(password);
+    processing_Password(password);
+    upper_lowerLeters(password);
+    includesSimbols(password);
+    checkResult();
+});
